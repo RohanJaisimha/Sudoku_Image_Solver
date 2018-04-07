@@ -1,6 +1,7 @@
 import java.io.*;
 class Sudoku
 {
+    //returns the coordinates of an empty space on the grid
     int FindUnassigned(int grid[][])
     {
         int row,col=0;
@@ -16,6 +17,8 @@ class Sudoku
         }
         return -1;
     }
+    
+    //returns whether or not a column has num in it already
     boolean CheckCol(int grid[][],int col,int num)
     {
         for(int i=0;i<9;i++)
@@ -25,6 +28,8 @@ class Sudoku
         }
         return true;
     }
+    
+    //returns whether or not a row has num in it already
     boolean CheckRow(int grid[][],int row,int num)
     {
         for(int i=0;i<9;i++)
@@ -34,6 +39,8 @@ class Sudoku
         }
         return true;
     }
+    
+    //returns whether or not a box has num in it already
     boolean CheckBox(int grid[][],int row,int col,int num)
     {
         for(int i=row;i<row+3;i++)
@@ -52,6 +59,8 @@ class Sudoku
             return true;
         return false;
     }
+    
+    //workhorse of the program; solves the puzzle using backtracking
     boolean Solve(int grid[][])
     {
         int a=FindUnassigned(grid);
@@ -70,8 +79,10 @@ class Sudoku
             }
         }
         return false;
-    }    
-    void Print(int grid[][])
+    } 
+    
+    //prints the grid in a fancy way
+    void PrintGrid(int grid[][])
     {
         System.out.println("The solved grid is:-");
         System.out.println();
@@ -115,7 +126,7 @@ class Sudoku
         }       
         Sudoku s1=new Sudoku();
         if(s1.Solve(grid)==true)
-            s1.Print(grid);
+            s1.PrintGrid(grid);
         else
             System.out.println("Grid cannot be solved");
     }
