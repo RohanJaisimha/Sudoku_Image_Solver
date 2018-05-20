@@ -1,17 +1,18 @@
-def makeGrid(file):
-  fin=open(file,'r')
-  for line in fin:
-    row=line.split()
-    grid.append([int(x) for x in row])
+def makeGrid():
+  print("Enter the grid:\n")
+  grid=[]
+  for i in range(9):
+    grid.append([int(j) for j in input().split()])
+  return grid
 
-def findUnassignedSpace():
+def findUnassignedSpace(grid):
   for i in range(len(grid)):
     for j in range(len(grid)):
       if(grid[i][j]==0):
         return i,j
   return -1,-1
 
-def solve():
+def solve(grid):
   row,col=findUnassignedSpace()
   if(row==-1 and col==-1):
     return True
@@ -23,26 +24,26 @@ def solve():
       grid[row][col]=0
   return False
 
-def checkCol(col,num):
+def checkCol(grid,col,num):
   for i in range(len(grid)):
     if(grid[i][col]==num):
       return False
   return True
 
-def checkRow(row,num):
+def checkRow(grid,row,num):
   for i in range(len(grid)):
     if(grid[row][i]==num):
       return False
   return True
 
-def checkBox(row,col,num):
+def checkBox(grid,row,col,num):
   for i in range(row,row+3):
     for j in range(col,col+3):
       if(grid[i][j]==num):
         return False
   return True
 
-def printGrid():
+def printGrid(grid):
   for i in range(len(grid)):
     if(i%3==0):
       print("+-------+-------+-------+")
@@ -55,18 +56,14 @@ def printGrid():
   print("+-------+-------+-------+")
 
 def isSafe(row,col,num):
-  return (checkCol(col,num) and checkRow(row,num) and checkBox(row//3*3,col//3*3,num))
+  return checkCol(col,num) and checkRow(row,num) and checkBox(row//3*3,col//3*3,num)
              
-def main(argv):
-  global grid
-  grid=[]
-  makeGrid(argv)
-  if(solve()):
+def main():
+  grid=makeGrid()
+  if(solve(grid)):
     printGrid()
   else:
     print("Grid is not Solvable")
 
-
-import sys
-main(sys.argv[1])
+main()
   
