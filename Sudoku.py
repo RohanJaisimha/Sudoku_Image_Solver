@@ -1,3 +1,4 @@
+#reads input from console and stores into 2D list
 def makeGrid():
   print("Enter the grid:")
   grid=[]
@@ -5,6 +6,7 @@ def makeGrid():
     grid.append([int(j) for j in input().split()])
   return grid
 
+#returns the coordinates of an empty cube in the grid
 def findUnassignedSpace(grid):
   for i in range(len(grid)):
     for j in range(len(grid)):
@@ -12,6 +14,7 @@ def findUnassignedSpace(grid):
         return i,j
   return -1,-1
 
+#solves grid recursively using recursion
 def solve(grid):
   row,col=findUnassignedSpace(grid)
   if(row==-1 and col==-1):
@@ -24,18 +27,26 @@ def solve(grid):
       grid[row][col]=0
   return False
 
+#uses checkCol, checkRow and checkBox to see if num can be placed in (row,col)
+def isSafe(grid,row,col,num):
+  return checkCol(grid,col,num) and checkRow(grid,row,num) and checkBox(grid,row//3*3,col//3*3,num)
+
+#checks to see if num is in colth column of grid
 def checkCol(grid,col,num):
   for i in range(len(grid)):
     if(grid[i][col]==num):
       return False
   return True
 
+
+#checks to see if num is in rowth row of grid
 def checkRow(grid,row,num):
   for i in range(len(grid)):
     if(grid[row][i]==num):
       return False
   return True
 
+#checks to see if num is in the 3x3 box with top corner having coordinates of (row,col)
 def checkBox(grid,row,col,num):
   for i in range(row,row+3):
     for j in range(col,col+3):
@@ -43,6 +54,8 @@ def checkBox(grid,row,col,num):
         return False
   return True
 
+
+#prints the solved grid in a lovely format
 def printGrid(grid):
   print("\nThe solved grid is: ")
   for i in range(len(grid)):
@@ -55,10 +68,8 @@ def printGrid(grid):
       if(j==8):
         print("|")
   print("+-------+-------+-------+")
-
-def isSafe(grid,row,col,num):
-  return checkCol(grid,col,num) and checkRow(grid,row,num) and checkBox(grid,row//3*3,col//3*3,num)
              
+
 def main():
   grid=makeGrid()
   if(solve(grid)):
@@ -66,4 +77,5 @@ def main():
   else:
     print("Grid is not Solvable")
 
-main()
+if(__name__ == "__main__"):
+  main()
