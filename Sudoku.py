@@ -1,5 +1,5 @@
 def makeGrid():
-  print("Enter the grid:\n")
+  print("Enter the grid:")
   grid=[]
   for i in range(9):
     grid.append([int(j) for j in input().split()])
@@ -13,13 +13,13 @@ def findUnassignedSpace(grid):
   return -1,-1
 
 def solve(grid):
-  row,col=findUnassignedSpace()
+  row,col=findUnassignedSpace(grid)
   if(row==-1 and col==-1):
     return True
   for num in range(1,10):
-    if(isSafe(row,col,num)):
+    if(isSafe(grid,row,col,num)):
       grid[row][col]=num
-      if(solve()):
+      if(solve(grid)):
         return True
       grid[row][col]=0
   return False
@@ -44,6 +44,7 @@ def checkBox(grid,row,col,num):
   return True
 
 def printGrid(grid):
+  print("\nThe solved grid is: ")
   for i in range(len(grid)):
     if(i%3==0):
       print("+-------+-------+-------+")
@@ -55,15 +56,14 @@ def printGrid(grid):
         print("|")
   print("+-------+-------+-------+")
 
-def isSafe(row,col,num):
-  return checkCol(col,num) and checkRow(row,num) and checkBox(row//3*3,col//3*3,num)
+def isSafe(grid,row,col,num):
+  return checkCol(grid,col,num) and checkRow(grid,row,num) and checkBox(grid,row//3*3,col//3*3,num)
              
 def main():
   grid=makeGrid()
   if(solve(grid)):
-    printGrid()
+    printGrid(grid)
   else:
     print("Grid is not Solvable")
 
 main()
-  
